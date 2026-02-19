@@ -73,7 +73,7 @@ class MongoByteStore(BaseStore[str, bytes]):
     def yield_keys(self, *, prefix: Optional[str] = None) -> Iterator[str]:
         query = {}
         if prefix is not None:
-            # Safe prefix match using escaped regex.
+
             query = {"_id": {"$regex": f"^{re.escape(prefix)}"}}
         for doc in self._collection.find(query, {"_id": 1}):
             yield str(doc["_id"])
